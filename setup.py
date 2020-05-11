@@ -25,17 +25,17 @@ def plp():
 
 class Clean(clean):
     def run(self):
-        print 'Cleaning ...'
+        print('Cleaning ...')
         os.system('find -name *.pyc|xargs rm -rf')
         for dirs in ('build', 'dist'):
             if os.path.exists(dirs):
-                print ' removing: ', dirs
+                print(' removing: ', dirs)
                 shutil.rmtree(dirs)
         clean.run(self)
 
 class Dist(sdist):
     def run(self):
-        os.system('python setup.py build')
+        #os.system('python3 setup.py build')
         sdist.run(self)
 
 class Uninstall(Command):
@@ -45,14 +45,14 @@ class Uninstall(Command):
     def finalize_options(self):
         pass
     def run(self):
-        print 'Uninstalling ...'
+        print('Uninstalling ...')
         project_dir = plp()
         if os.path.exists(project_dir):
-            print ' removing: ', project_dir
+            print(' removing: ', project_dir)
             shutil.rmtree(project_dir)
 
 setup(name=PROJECT,
-      version='2.1.0',
+      version='3.0.0',
       description='Pds: Pisi Desktop Services',
       long_description='Pds is a Python Library that helps developers for '\
                        'creating desktop environment independet UI applications',

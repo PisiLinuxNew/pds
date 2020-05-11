@@ -26,8 +26,8 @@ class PMplayer(PApplicationContainer):
             parent.closeEvent = self.closeEvent
 
     def openMedia(self, path):
-        ret = self.start("mplayer", ("-wid", str(self.winId()), str(path)))
-	#print ret
+        ret = self.start("mplayer", ("'{}'".format(path), ))
+        #print(ret)
         if ret[0]:
             self.show()
 
@@ -43,13 +43,14 @@ class TestUI(QtWidgets.QWidget):
 
         self.mplayer = PMplayer(self)
         self.layout.addWidget(self.mplayer)
-
+        self.win_name = "TestUI"
+        self.setWindowTitle("TestUI")
         self.pushbutton.clicked.connect(self.getMedia)
 
     def getMedia(self):
         self.mplayer.openMedia(
                 QtWidgets.QFileDialog.getOpenFileName(self,
-                    "Open Media", "/", "Media Files (*.ogv *.mov *.avi)")[0])
+                    "Open Media", "/", "Media Files (*.ogv *.mov *.avi *.mp4)")[0])
 
 if __name__ == "__main__":
     import sys

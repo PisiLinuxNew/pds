@@ -85,7 +85,7 @@ class Test(QWidget):
             pictureWidget.createPage(label)
 
         timer = QTimer(self)
-        timer.timeout.connect(pictureWidget.next)
+        timer.timeout.connect(pictureWidget.__next__)
         timer.start(2000)
 
         self.layout.addWidget(pictureWidget)

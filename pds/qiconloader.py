@@ -30,7 +30,7 @@ from pds import Pds
 class QIconTheme:
     def __init__(self, dirList = [], parents = []):
         self.dirList = dirList
-        self.parents = map(lambda x:str(x), list(parents))
+        self.parents = [str(x) for x in list(parents)]
         self.valid = False
         if len(dirList) > 0:
             self.valid = True
@@ -44,7 +44,7 @@ class QIconLoader:
     SizeHuge        = 64
     SizeEnormous    = 128
 
-    TopLeft, TopRight, BottomLeft, BottomRight = range(4)
+    TopLeft, TopRight, BottomLeft, BottomRight = list(range(4))
 
     def __init__(self, pds = None, debug = False, forceCache = False):
 
@@ -59,7 +59,7 @@ class QIconLoader:
         # Get possible Data Directories
         dataDirs = QFile.decodeName(getenv('XDG_DATA_DIRS'))
         if not dataDirs.isalnum():
-            dataDirs = u'/usr/local/share/:/usr/share/'
+            dataDirs = '/usr/local/share/:/usr/share/'
 
         dataDirs = QDir.homePath() + ":"+dataDirs
         #dataDirs = str(self.pds.config_path) + 'share:'+ dataDirs
@@ -74,9 +74,7 @@ class QIconLoader:
         self.themeName = self.pds.settings(self.pds.session.IconKey, \
                                            self.pds.session.DefaultIconTheme)
         
-        self.iconDirs =  filter(lambda x: path.exists(x),
-                map(lambda x: path.join(unicode(x), 'icons'),
-                    dataDirs.split(':')))
+        self.iconDirs =  [x for x in [path.join(str(x), 'icons') for x in dataDirs.split(':')] if path.exists(x)]
         self.iconDirs = list(set(self.iconDirs))
 
         logging.debug('Icon Dirs : %s' % ','.join(self.iconDirs))
@@ -96,8 +94,8 @@ class QIconLoader:
 
         # Read theme index files
         for i in range(len(self.iconDirs)):
-            themeIndex.setFileName(path.join(unicode(self.iconDirs[i]), 
-                unicode(themeName), "index.theme"))
+            themeIndex.setFileName(path.join(str(self.iconDirs[i]), 
+                str(themeName), "index.theme"))
             if themeIndex.exists():
                 indexReader = QSettings(themeIndex.fileName(), 
                         QSettings.IniFormat)
@@ -106,7 +104,7 @@ class QIconLoader:
                         size = str(indexReader.value(key))
                         
                         dirList.append((size, 
-                            unicode(key[:-5])))
+                            str(key[:-5])))
                 
                 parents = indexReader.value('Icon Theme/Inherits')
                 dump=parents
@@ -144,7 +142,7 @@ class QIconLoader:
             if path.exists(iconDir):
                 icons.extend(glob(path.join(iconDir, '*.png')))
 
-        _icons = map(lambda a: a.split('/')[-1][:-4], icons)
+        _icons = [a.split('/')[-1][:-4] for a in icons]
 
         return list(set(_icons))
 
@@ -163,7 +161,7 @@ class QIconLoader:
             index = self.readThemeIndex(themeName)
 
         
-        subDirs = filter(lambda x:x[0] == str(size), index.dirList)
+        subDirs = [x for x in index.dirList if x[0] == str(size)]
         
         for iconDir in self.iconDirs:
             if path.exists(path.join(iconDir, themeName)):

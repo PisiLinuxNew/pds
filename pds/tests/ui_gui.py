@@ -111,6 +111,7 @@ class Ui_PdsTest(object):
         self.gridLayout = QtWidgets.QGridLayout(self.target)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.webView = QtWebKitWidgets.QWebView(self.target)
+        #self.webView = QtWebEngineWidgets.Q
         self.webView.setUrl(QtCore.QUrl(_fromUtf8("http://pisilinux.org")))
         self.webView.setObjectName(_fromUtf8("webView"))
         self.gridLayout.addWidget(self.webView, 0, 0, 1, 1)

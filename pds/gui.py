@@ -25,12 +25,12 @@ from PyQt5 import QtCore
 (TOPLEFT, TOPCENTER, TOPRIGHT, \
  MIDLEFT, MIDCENTER, MIDRIGHT, \
  BOTLEFT, BOTCENTER, BOTRIGHT,
- CURRENT) = range(10)
+ CURRENT) = list(range(10))
 # --------------------
 FORWARD = QtCore.QTimeLine.Forward
 BACKWARD = QtCore.QTimeLine.Backward
 # --------------------
-(IN, OUT, FINISHED) = range(3)
+(IN, OUT, FINISHED) = list(range(3))
 # --------------------
 
 class PAbstractBox(QtWidgets.QWidget):

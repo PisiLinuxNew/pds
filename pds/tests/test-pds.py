@@ -55,27 +55,27 @@ class Ui_Test(object):
         self.name.setCompleter(completer)
         self.getButton.setShortcut("Return")
 
-        print "Desktop Session :", self.loader.pds.session.Name
-        print "Desktop Version :", self.loader.pds.session.Version
-        print "Icon Paths      :", self.loader.iconDirs
-        print "Theme           :", self.loader.themeName
+        print("Desktop Session :", self.loader.pds.session.Name)
+        print("Desktop Version :", self.loader.pds.session.Version)
+        print("Icon Paths      :", self.loader.iconDirs)
+        print("Theme           :", self.loader.themeName)
 
     def showIcon(self):
         a = time()
-        print "Clicked !"
-        icons = unicode(self.name.currentText())
+        print("Clicked !")
+        icons = str(self.name.currentText())
         self.label.setPixmap(self.loader.load(icons.split(','), self.size.currentText()))
-        print 'It took : ', time() - a
+        print('It took : ', time() - a)
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Test = QtWidgets.QWidget()
     a = time()
-    print "Started !"
+    print("Started !")
     ui = Ui_Test()
     ui.setupUi(Test)
     Test.show()
-    print 'It took : ', time() - a
+    print('It took : ', time() - a)
     sys.exit(app.exec_())
 

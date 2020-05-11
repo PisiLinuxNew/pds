@@ -18,8 +18,8 @@ from PyQt5 import Qt
 import time, os
 
 class PApplicationContainer(Qt.QWidget):
-    clientClosed=Qt.pyqtSignal()
-    processFinished=Qt.pyqtSignal([int,int])
+    clientClosed = Qt.pyqtSignal()
+    processFinished = Qt.pyqtSignal([int,int])
     
     
     def __init__(self, parent = None, process = None, args = ()):
@@ -31,11 +31,15 @@ class PApplicationContainer(Qt.QWidget):
         self._process = process
         self._args = args
         
-        self.parent=parent
-        self.pwinId=parent.winId()
-
+        self.parent = parent
+        try:
+            self.pwinId = parent.winId()
+        except:
+            self.pwinId = self.winId()
+            
+            
     def start(self, process = None, args = ()):
-        
+        print(process, args)
         process = process or self._process
         args = args or self._args
 
@@ -49,9 +53,21 @@ class PApplicationContainer(Qt.QWidget):
         self._proc.finished.connect(self._finished)
         self._proc.start(process, args)
         
-        self.container=Qt.QWindow.fromWinId(self.getWID())
-        self.display=self.createWindowContainer(self.container,self)
-        self.layout.addWidget(self.display)
+        print(self._proc.waitForReadyRead())
+        print(self._proc.processId())
+        winId = self.getWID_width_pid()
+        print(winId)
+        
+        #while winId is None:
+                #winId = self.getWID_width_pid()
+                #print("winId bulunurken lütfen bekleyin")
+        
+        # önce işlem winId yi bul
+        if winId is not None:
+            self.container = Qt.QWindow.fromWinId(int(winId, 16))
+            
+            self.display = self.createWindowContainer(self.container, self)
+            self.layout.addWidget(self.display)
         
         #print self.getWID()
         self.clientClosed.connect(self._proc.close)
@@ -88,15 +104,49 @@ class PApplicationContainer(Qt.QWidget):
 
     def getWID(self):
         time.sleep(5)
-        winName=self.parent.win_name
-        running=os.system("xwininfo -name \"{}\"".format(winName))
-        if (not running==0):
+        winName = self.parent.windowTitle()  # win_name
+        running = os.system("xwininfo -name \"{}\"".format(winName))
+        if (not running == 0):
             return "process NotRunning"
         
-        xwininfo=os.popen("xwininfo -name \"{}\"".format(winName))
-        xwininfo_out=xwininfo.read()
+        xwininfo = os.popen("xwininfo -name \"{}\"".format(winName))
+        xwininfo_out = xwininfo.read()
         xwininfo.close()
-        xwininfo_out=xwininfo_out.split("\n")
-        xwininfo_out=xwininfo_out[1]
-        winId=xwininfo_out.split(" ")[3]
-        return int(winId,16)
+        xwininfo_out = xwininfo_out.split("\n")
+        xwininfo_out = xwininfo_out[1]
+        winId = xwininfo_out.split(" ")[3]
+        print(int(winId, 16), int(self.parent.winId()))
+        return int(winId, 16)
+
+
+    def getWID_width_pid(self): # FIXME: fix this function
+        pid = self._proc.processId()
+        ids_proc = os.popen("xwininfo -root -tree")
+        
+        ids = ids_proc.readlines()
+        ids_proc.close()
+        
+        dump = []
+        for i in range(len(ids)):
+            if ids[i].strip().startswith("0x"):
+                dump.append(ids[i].strip().split()[0])
+        
+        ids = dump
+        del dump
+        
+        winIds = []
+        for _id in ids:
+            if os.system(f"xprop -id {_id} _NET_WM_PID") == 0:
+                print("state -------------------->", self._proc.state())
+                proc = os.popen(f"xprop -id {_id} _NET_WM_PID")
+                winpid = proc.read()
+                
+                winpid = winpid.split(" ")[-1].strip("\n")
+                if str(pid) == winpid:
+                    winIds.append(_id)
+                proc.close()
+                    
+        if len(winIds) > 0:
+            return winIds[0] 
+        else:
+            return self.getWID_width_pid()
