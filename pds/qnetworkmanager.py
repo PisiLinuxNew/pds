@@ -95,8 +95,8 @@ class ConnectionItem(QtWidgets.QWidget, Ui_ConnectionItem):
         else:
             self.setIcon(get_icon(self.connection.settings.conn_type, False))
 
-        self.name.setText(unicode(self.connection.settings.id))
-        self.details.setText(unicode(self.connection.settings.conn_type))
+        self.name.setText(str(self.connection.settings.id))
+        self.details.setText(str(self.connection.settings.conn_type))
         self.button.setText("Disconnect" if active else "Connect")
 
     def showBusy(self):
@@ -162,10 +162,10 @@ class QNetworkManager(QtWidgets.QListWidget):
         return self.filterByConnection(connection)[0].state.value
 
     def filterByConnection(self, connection):
-        return filter(lambda x: x.connection.settings.uuid == \
+        return [x for x in self.nm.active_connections if x.connection.settings.uuid == \
                                   connection.settings.uuid and \
-                        unicode(x.connection.settings.id) == \
-                          unicode(connection.settings.id), self.nm.active_connections)
+                        str(x.connection.settings.id) == \
+                          str(connection.settings.id)]
 
     def fillConnections(self, *args):
         self.clearList()

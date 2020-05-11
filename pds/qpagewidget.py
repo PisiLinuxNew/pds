@@ -209,7 +209,7 @@ class QPageWidget(QScrollArea):
 
         # Create connections for page navigation signals from new page
         try:
-            page.widget.pageNext.connect(self.next)
+            page.widget.pageNext.connect(self.__next__)
             page.widget.pagePrevious.connect(self.prev)
             page.widget.setCurrent[int].connect(self.setCurrent)
         except:
@@ -296,7 +296,7 @@ class QPageWidget(QScrollArea):
             self.__timeline.setFrameRange(self.__scrollBar.value(), self.__current * self.__base_value())
             self.__timeline.start()
 
-    def next(self):
+    def __next__(self):
         """ Helper method to flip next page. """
         self.flipPage(1)
 

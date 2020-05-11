@@ -54,11 +54,12 @@ class TestUI(QtWidgets.QWidget):
         
         self.setGeometry(self.x(),self.y(),400,200)
         self.win_name=self.mplayer.win_name
+        self.setWindowTitle(self.win_name)
 
     def getMedia(self):
-	self.mplayer.openMedia(
-                QtWidgets.QFileDialog.getOpenFileName(self,
-                    "Open Media", "/", "Media Files (*.ogv *.mov *.avi)")[0])
+        self.mplayer.openMedia(
+            QtWidgets.QFileDialog.getOpenFileName(self,
+                                                  "Open Media", "/", "Media Files (*.ogv *.mov *.avi *.mp4)")[0])
 
 if __name__ == "__main__":
     import sys

@@ -53,18 +53,17 @@ class Pds:
 
             def __i18n(*text):
                 if len(text) == 1:
-                    return self.__trans.ugettext(text[0])
-                ttt = unicode(self.__trans.ugettext(text[0]))
+                    return self.__trans.gettext(text[0])
+                ttt = str(self.__trans.gettext(text[0]))
                 for i in range(1,len(text)):
-                    ttt = ttt.replace('%%%d' % i, unicode(text[i]))
+                    ttt = ttt.replace('%%%d' % i, str(text[i]))
                 return ttt
 
             self.i18n = __i18n
             DefaultDe.i18n = staticmethod(__i18n)
 
-        self._acceptedMethods = filter(lambda x: not x.startswith('__') or \
-                                                 not x == 'i18n',
-                                                 dir(self.session))
+        self._acceptedMethods = [x for x in dir(self.session) if not x.startswith('__') or \
+                                                 not x == 'i18n']
 
         self.notifierInitialized = False
         self.catalogName = catalogName
@@ -74,8 +73,8 @@ class Pds:
         if str(name) in self._acceptedMethods:
             return getattr(self.session, str(name))
 
-        if not self.__dict__.has_key(name):
-            raise AttributeError, name
+        if name not in self.__dict__:
+            raise AttributeError(name)
 
     def updatei18n(self, lang):
         if self.catalogName:
@@ -88,7 +87,7 @@ class Pds:
             if not self.notifierInitialized:
                 pynotify.init(self.catalogName)
                 self.notifierInitialized = True
-            notifier = pynotify.Notification(unicode(title), unicode(message),\
+            notifier = pynotify.Notification(str(title), str(message),\
                     icon or self.catalogName)
             notifier.show()
         except:
@@ -110,14 +109,14 @@ class Pds:
                 if _value:
                     value = _value.join(',')
             else:
-                value = unicode(_value)
+                value = str(_value)
 
             if not value or value == '':
                 logging.debug('Switching to default conf')
                 alternateConfig = self.session.DefaultConfigPath or \
                     path.join(self.install_prefix, self.session.ConfigFile)
                 settings = self.parse(alternateConfig, force = True)
-                value = unicode(settings.value(key, default))
+                value = str(settings.value(key, default))
                 
         elif self.session.ConfigType == 'xml':
             settings = self.parse(self.config_file, 'xml').getTag('property')

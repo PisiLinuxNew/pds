@@ -26,7 +26,7 @@ class PMplayer(PApplicationContainer):
             parent.closeEvent = self.closeEvent
 
     def openMedia(self, path):
-        ret = self.start("mpv", (str(path),))
+        ret = self.start("vlc", (str(path),))
 	
         if ret[0]:
             self.show()

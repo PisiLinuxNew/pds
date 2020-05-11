@@ -16,6 +16,6 @@ from pds.quniqueapp import QUniqueApplication
 app = QUniqueApplication(sys.argv, catalog = 'test-app')
 
 if app.readyToRun:
-    print 'Application started !'
+    print('Application started !')
 
 app.exec_()

@@ -34,7 +34,7 @@ class PThread(QThread):
     def run(self):
         try:
             self.data = self.action(*self.args, **self.kwargs)
-        except Exception, e:
+        except Exception as e:
             #print e
             if self.exceptionHandler:
                 self.exceptionHandler(e)
