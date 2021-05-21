@@ -108,7 +108,8 @@ class Pds:
                 # Sometimes kdeglobals stores values without quotes
                 #_value = _value.toStringList()
                 if _value:
-                    value = _value.join(',')
+                   # value = _value.join(',')
+                   value = ','.join(_value)
             else:
                 value = unicode(_value)
 
