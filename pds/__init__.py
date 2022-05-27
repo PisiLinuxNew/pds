@@ -158,7 +158,7 @@ class Pds:
                     elif v[1] == 'DESKTOP':
                         env = v[0].lower()
                         break
-            elif env == 'default' or env == 'gnome':
+            elif env == 'default' or env == 'Gnome':
                 session = readfile('/etc/default/desktop', DefaultDe.Name)
                 env     = session.split('=')[1].strip()
             for de in Pds.SupportedDesktops:

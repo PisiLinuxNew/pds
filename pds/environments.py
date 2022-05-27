@@ -30,10 +30,10 @@ class DefaultDe(object):
 # kde5 için sınıfı düzenlenecek ve kde5 için bilgiler istenecek!!!
 class Kde5(DefaultDe):
     Name                 = 'kde'
-    SessionTypes         = ('/usr/share/xsessions/plasma-mediacenter')
+    SessionTypes         = ('/usr/share/xsessions/plasma')
     Version              = '5'
     VersionKey           = 'KDE_SESSION_VERSION'
-    ConfigPath           = ('$HOME/.config/', '$HOME/.config5/')
+    ConfigPath           = ('$HOME/.config/', '$HOME/.config/')
     ConfigFile           = 'kdeglobals'
     ConfigType           = 'ini'
     DefaultConfigPath    = '$HOME/.config/kdeglobals'
