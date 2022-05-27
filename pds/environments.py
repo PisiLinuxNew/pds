@@ -77,7 +77,6 @@ class LxQt(DefaultDe):
     ConfigType           = None
     DefaultIconTheme     = 'damadamas'
     IconKey              = 'theme/name'
-    DefaultIconFile      = '/usr/share/lxqt/graphics/helix_lxqt.svg'
 
 class Fluxbox(DefaultDe):
     Name                 = 'fluxbox'
