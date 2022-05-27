@@ -81,7 +81,7 @@ class QIconLoader:
 
         logging.debug('Icon Dirs : %s' % ','.join(self.iconDirs))
         self.themeIndex = self.readThemeIndex(self.themeName)
-        self.extraIcons = ['/usr/share/pixmaps']
+        self.extraIcons = ['/usr/share/pixmaps', '/usr/share/pixmaps/icons']
         self.updateAvailableIcons()
         
 

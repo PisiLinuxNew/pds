@@ -36,47 +36,9 @@ class Kde5(DefaultDe):
     ConfigPath           = ('$HOME/.config/', '$HOME/.config5/')
     ConfigFile           = 'kdeglobals'
     ConfigType           = 'ini'
-    #ConfigBin            = 'kde4-config'
-    #DefaultIconFile      = '/usr/share/icons/default.kde4'
     DefaultConfigPath    = '$HOME/.config/kdeglobals'
     DefaultIconTheme     = 'breeze' # breeze simge teması svg dosyalarından oluşuyor pds png uzantılı dosyalar açıyor
     IconKey              = 'Icons/Theme'
-    #try:
-    #    from PyKDE4 import kdecore, kdeui
-    #    i18n                 = kdecore.i18n
-    #except:
-    #    pass
-
-
-class Kde4(DefaultDe):
-    Name                 = 'kde'
-    SessionTypes         = ('kde-plasma')
-    Version              = '4'
-    VersionKey           = 'KDE_SESSION_VERSION'
-    ConfigPath           = ('$HOME/.kde4/', '$HOME/.kde/')
-    ConfigFile           = 'share/config/kdeglobals'
-    ConfigType           = 'ini'
-    ConfigBin            = 'kde4-config'
-    DefaultIconFile      = '/usr/share/icons/default.kde4'
-    DefaultIconTheme     = 'oxygen'
-    IconKey              = 'Icons/Theme'
-    #try:
-    #    from PyKDE4 import kdecore, kdeui
-    #    i18n                 = kdecore.i18n
-    #except:
-    #    pass
-
-class Kde3(DefaultDe):
-    Name                 = 'kde'
-    Version              = '3.5'
-    ConfigPath           = '$HOME/.kde/'
-    ConfigFile           = 'share/config/kdeglobals'
-    ConfigType           = 'ini'
-    ConfigBin            = 'kde-config'
-    DefaultIconFile      = '/usr/share/icons/default.kde'
-    DefaultIconTheme     = 'crystalsvg'
-    IconKey              = 'Icons/Theme'
-    ExtraDirs            = 'KDEDIRS'
 
 class Xfce(DefaultDe):
     Name                 = 'xfce'
@@ -107,6 +69,16 @@ class LXDE(DefaultDe):
     IconKey              = 'theme/name'
     DefaultIconFile      = '/usr/share/lxde/images/pisilinuxLogo.png'
 
+class LxQt(DefaultDe):
+    Name                 = 'LxQt'
+    Version              = '1.1'
+    ConfigPath           = '$HOME/.config/lxqt'
+    ConfigFile           = ''
+    ConfigType           = None
+    DefaultIconTheme     = 'damadamas'
+    IconKey              = 'theme/name'
+    DefaultIconFile      = '/usr/share/lxqt/graphics/helix_lxqt.svg'
+
 class Fluxbox(DefaultDe):
     Name                 = 'fluxbox'
     Version              = '1.3.1'
@@ -127,16 +99,16 @@ class Gnome(DefaultDe):
 class Gnome3(DefaultDe):
     Name                 = 'gnome3'
     SessionTypes         = ('gnome-shell')
-    Version              = '3.0'
-    ConfigPath           = '$HOME/.gnome2'
+    Version              = '41.3'
+    ConfigPath           = '$HOME/.gconf'
     ConfigFile           = ''
     ConfigType           = None
-    DefaultIconTheme     = 'oxygen'
+    DefaultIconTheme     = 'adwaita'
 
 class Mate(DefaultDe):
     Name                 = 'mate'
-    Version              = '1.61'
+    Version              = '1.25'
     ConfigPath           = '$HOME/.config/mate'
     ConfigFile           = ''
     ConfigType           = None
-    DefaultIconTheme     = 'matefaenza'
+    DefaultIconTheme     = 'mate'
