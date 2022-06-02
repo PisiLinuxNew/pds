@@ -81,6 +81,7 @@ class QIconLoader:
 
         logging.debug('Icon Dirs : %s' % ','.join(self.iconDirs))
         self.themeIndex = self.readThemeIndex(self.themeName)
+        #self.extraIcons = ['/usr/share/pixmaps/icons']
         self.extraIcons = ['/usr/share/pixmaps', '/usr/share/pixmaps/icons']
         self.updateAvailableIcons()
         
@@ -143,6 +144,7 @@ class QIconLoader:
         for iconDir in self.extraIcons:
             if path.exists(iconDir):
                 icons.extend(glob(path.join(iconDir, '*.png')))
+            	icons.extend(glob(path.join(iconDir, '*.svg')))
 
         _icons = map(lambda a: a.split('/')[-1][:-4], icons)
 
@@ -177,10 +179,12 @@ class QIconLoader:
                         pixmap.load(fileName)
                         logging.debug('Icon: %s found in theme %s' % \
                                 (iconName, themeName))
+                        #print "pixmap ->{}".format(fileName)
                         return pixmap
                     elif path.exists(fileName_svg):
                         pixmap.load(fileName_svg)
                         logging.debug('Icon: %s found in %s' % (iconName, iconDir))
+                        #print "pixmap ->{}".format(fileName_svg)
                         return pixmap
 
         for iconDir in self.extraIcons:
@@ -193,11 +197,11 @@ class QIconLoader:
                 return pixmap
             elif path.exists(fileName_svg):
                     image=QImage(size, size, QImage.Format_RGB32)
-                    reader=QImageReader(fileName)
+                    reader=QImageReader(fileName_svg)
                     reader.read(image)
                     pixmap.convertFromImage(image)
                     logging.debug('Icon: %s found in %s' % (iconName, iconDir))
-                    #print "pixmap ->{}".format(fileName)
+                    #print "pixmap ->{}".format(fileName_svg)
                     return pixmap
 
         if len(self._themes) > 0:
@@ -267,7 +271,7 @@ class QIconLoader:
             return icon.pixmap(QSize(size, size))
         return pix
 
-    def loadOverlayed(self, name, overlay = None, size = 128, overlay_size = 16, position = 2):
+    def loadOverlayed(self, name, overlay = None, size = 128, overlay_size = 16, position = 0):
 
         if not overlay:
             return self.load(name, size)

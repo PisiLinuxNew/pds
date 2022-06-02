@@ -111,3 +111,19 @@ class Mate(DefaultDe):
     ConfigFile           = ''
     ConfigType           = None
     DefaultIconTheme     = 'mate'
+    
+class Lumina(DefaultDe):
+    Name                 = 'lumina'
+    Version              = '1.6'
+    ConfigPath           = '$HOME/.config/lumina'
+    ConfigFile           = ''
+    ConfigType           = None
+    DefaultIconTheme     = 'adwaita'
+
+class Cinnamon(DefaultDe):
+    Name                 = 'cinnamon'
+    Version              = '5.2'
+    ConfigPath           = '$HOME/.config/cinnamon'
+    ConfigFile           = ''
+    ConfigType           = None
+    DefaultIconTheme     = 'adwaita'

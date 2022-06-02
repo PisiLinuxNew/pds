@@ -32,7 +32,7 @@ from pds.environments import *
 
 class Pds:
 
-    SupportedDesktops = (DefaultDe, Kde5, Kde4, Kde3, Xfce, Enlightenment, LXDE,
+    SupportedDesktops = (DefaultDe, Kde5, Xfce, Enlightenment, LXDE, LxQt, Lumina, Cinnamon, 
                         Fluxbox, Gnome, Gnome3, Mate)
 
     def __init__(self, catalogName='', debug=False):
